@@ -21,4 +21,4 @@ Java 17, PostgreSQL 16
 
 ## Cборка проекта:
 
-![mvnInstall.png](mvnInstall.png)
+![mvnInstall.png](files%2FmvnInstall.png)
