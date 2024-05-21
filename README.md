@@ -19,5 +19,6 @@
 ## Требования к окружению:
 Java 17, PostgreSQL 16
 
-## Запуск проекта:
+## Cборка проекта:
 
+![mvnInstall.png](mvnInstall.png)
