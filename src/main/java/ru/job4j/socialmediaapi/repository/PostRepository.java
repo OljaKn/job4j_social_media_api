@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import ru.job4j.socialmediaapi.model.Post;
+import ru.job4j.socialmediaapi.model.User;
 
 import java.awt.print.Pageable;
 import java.time.LocalDateTime;
@@ -41,5 +42,5 @@ public interface PostRepository extends CrudRepository<Post, Long> {
             where s.subscribed = p.user.id and s.status = false 
             order by p.created desc
             """)
-    Page<Post> findAllPostBySubscribedAndOrderByCreatedDesc(@Param("id") Long id);
+    Page<Post> findAllPostBySubscribedAndOrderByCreatedDesc(@Param("sub") User subscriber, Pageable pageable);
 }
