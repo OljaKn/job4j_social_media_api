@@ -1,6 +1,10 @@
 package ru.job4j.socialmediaapi.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import ru.job4j.socialmediaapi.model.Post;
 
 import java.awt.print.Pageable;
@@ -13,4 +17,29 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     List<Post> findByCreatedBetween(LocalDateTime startDate, LocalDateTime finishDate);
 
     List<Post> findByOrderByCreatedDesc(Pageable pageable);
+
+    @Modifying(clearAutomatically = true)
+    @Query("""
+            update Post p set p.title = :title, p.description = :description 
+            where p.id = :id
+            """)
+    int updateTitleAndDescription(@Param("title") String title, @Param("description") String description, @Param("id") Long id);
+
+    @Query("""
+            update Post p set p.image = null where p.id = :id
+            """)
+    int updateImage(@Param("id") Long id);
+
+    @Query("""
+            delete from Post p where p.id = :id
+            """)
+    void deletePostById(@Param("id") Long id);
+
+    @Query("""
+            select p from Post p 
+            join Subscriber s on s.subscriber = :sub 
+            where s.subscribed = p.user.id and s.status = false 
+            order by p.created desc
+            """)
+    Page<Post> findAllPostBySubscribedAndOrderByCreatedDesc(@Param("id") Long id);
 }
