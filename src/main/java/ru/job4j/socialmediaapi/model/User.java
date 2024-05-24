@@ -27,6 +27,4 @@ public class User {
 
     private String password;
 
-    private List<Post> postList;
-
 }
