@@ -48,4 +48,12 @@ public class PostController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody Post post) {
+        if (postService.update(post)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

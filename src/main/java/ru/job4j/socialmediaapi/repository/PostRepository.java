@@ -43,4 +43,9 @@ public interface PostRepository extends CrudRepository<Post, Long> {
             order by p.created desc
             """)
     Page<Post> findAllPostBySubscribedAndOrderByCreatedDesc(@Param("sub") User subscriber, Pageable pageable);
+
+    @Query("""
+            update Post p set p.title = :t, p.description = :d, p.image = :im where p.id = :id
+            """)
+    boolean update(@Param("t") String title, @Param("d") String description, @Param("im") String image, @Param("id") Long id);
 }

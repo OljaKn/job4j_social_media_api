@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.job4j.socialmediaapi.model.Post;
 import ru.job4j.socialmediaapi.model.User;
 import ru.job4j.socialmediaapi.service.UserService;
 
@@ -47,6 +48,14 @@ public class UserController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody User user) {
+        if (userService.update(user)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

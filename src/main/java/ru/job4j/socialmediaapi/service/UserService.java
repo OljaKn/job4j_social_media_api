@@ -23,4 +23,8 @@ public class UserService {
     public boolean deleteById(Long id) {
         return userRepository.deleteUserById(id) > 0L;
     }
+
+    public boolean update(User user) {
+        return userRepository.update(user.getName(), user.getEmail(), user.getPassword(), user.getId());
+    }
 }

@@ -32,4 +32,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Modifying
     @Query("delete from User u where u.id=:pId")
     int deleteUserById(@Param("pId") Long id);
+
+    @Query("""
+            update User u set u.name = :name, u.email = :email, u.password = :pas where p.id = :id
+            """)
+    boolean update(@Param("name") String title, @Param("email") String description, @Param("pas") String image, @Param("id") Long id);
 }

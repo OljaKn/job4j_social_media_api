@@ -24,6 +24,10 @@ public class PostService {
         return postRepository.deletePostById(id);
     }
 
+    public boolean update(Post post) {
+        return postRepository.update(post.getTitle(), post.getDescription(), post.getImage(), post.getId());
+    }
+
    /* @Transactional
     public Post createPost(User author, String title, String description, String image) {
         Post post = new Post();
