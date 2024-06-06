@@ -34,7 +34,7 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     @Query("""
             delete from Post p where p.id = :id
             """)
-    void deletePostById(@Param("id") Long id);
+    boolean deletePostById(@Param("id") Long id);
 
     @Query("""
             select p from Post p 

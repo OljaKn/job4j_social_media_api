@@ -1,5 +1,6 @@
 package ru.job4j.socialmediaapi.repository;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     WHERE s.subscriber = :subscriber AND s.status = true
     """)
     List<User> findAllSubscriber(@Param("subscriber") User subscriber);
+
+    @Modifying
+    @Query("delete from User u where u.id=:pId")
+    int deleteUserById(@Param("pId") Long id);
 }

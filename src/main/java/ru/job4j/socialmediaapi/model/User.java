@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Set;
-
 @Data
 @Entity
 @Table(name = "users")
@@ -26,5 +23,4 @@ public class User {
     private String email;
 
     private String password;
-
 }
