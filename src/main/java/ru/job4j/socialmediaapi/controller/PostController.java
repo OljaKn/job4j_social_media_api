@@ -1,11 +1,13 @@
 package ru.job4j.socialmediaapi.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.job4j.socialmediaapi.model.Post;
@@ -14,6 +16,7 @@ import ru.job4j.socialmediaapi.service.PostService;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/post")
+@Validated
 public class PostController {
     @Autowired
     private PostService postService;
@@ -29,7 +32,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> save(@RequestBody Post post) {
+    public ResponseEntity<Post> save(@Valid @RequestBody Post post) {
         postService.save(post);
         var uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -41,7 +44,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> removeById(@PathVariable Long postId) {
+    public ResponseEntity<Void> removeById(@PathVariable("postId") @NotNull
+    @Positive(message = "postId должен быть положительным числом") Long postId) {
         if (postService.deleteById(postId)) {
             return ResponseEntity.noContent().build();
         }
@@ -49,7 +53,7 @@ public class PostController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody Post post) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Post post) {
         if (postService.update(post)) {
             return ResponseEntity.ok().build();
         }
