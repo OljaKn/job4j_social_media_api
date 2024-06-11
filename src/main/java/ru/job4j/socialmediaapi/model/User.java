@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "users")
@@ -23,4 +26,7 @@ public class User {
     private String email;
 
     private String password;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Post> posts;
 }
