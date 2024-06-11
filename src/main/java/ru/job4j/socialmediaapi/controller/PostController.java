@@ -36,8 +36,7 @@ public class PostController {
                 .path("/{id}")
                 .buildAndExpand(post.getId())
                 .toUri();
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .location(uri)
+        return ResponseEntity.created(uri)
                 .body(post);
     }
 
@@ -46,7 +45,7 @@ public class PostController {
         if (postService.deleteById(postId)) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping
