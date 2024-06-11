@@ -21,7 +21,7 @@ public class Post {
     private String title;
     private String description;
     private String image;
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;

@@ -2,15 +2,24 @@ package ru.job4j.socialmediaapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.job4j.socialmediaapi.dto.UserDto;
 import ru.job4j.socialmediaapi.model.Post;
+import ru.job4j.socialmediaapi.model.User;
 import ru.job4j.socialmediaapi.repository.PostRepository;
+import ru.job4j.socialmediaapi.repository.UserRepository;
+import ru.job4j.socialmediaapi.dto.UserMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PostService {
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Post save(Post post) {
         return postRepository.save(post);
@@ -27,6 +36,19 @@ public class PostService {
     public boolean update(Post post) {
         return postRepository.update(post.getTitle(), post.getDescription(), post.getImage(), post.getId());
     }
+
+    public List<UserDto> findByUsersIdAllPosts(List<Long> usersId) {
+            List<UserDto> result = new ArrayList<>();
+            for (Long userId : usersId) {
+                Optional<User> user = userRepository.findById(userId);
+                if (user.isPresent()) {
+                    List<Post> posts = postRepository.findByUserId(Math.toIntExact(userId));
+                    result.add(UserMapper.getUserDro(user.get(), posts));
+                }
+            }
+            return result;
+        }
+}
 
    /* @Transactional
     public Post createPost(User author, String title, String description, String image) {
@@ -54,4 +76,3 @@ public class PostService {
     public Optional<Object> findById(Long postId) {
         return Optional.of(postRepository.findById(postId));
     }*/
-}

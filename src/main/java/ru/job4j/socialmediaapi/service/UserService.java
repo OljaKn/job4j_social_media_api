@@ -2,9 +2,11 @@ package ru.job4j.socialmediaapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.job4j.socialmediaapi.dto.UserDto;
 import ru.job4j.socialmediaapi.model.User;
 import ru.job4j.socialmediaapi.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
